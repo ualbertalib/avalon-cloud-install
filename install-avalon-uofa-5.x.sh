@@ -124,11 +124,14 @@ install_sources() {
 
 configure_sources() {
   cd $AVALON_DOCKER_DIR
+  EXT_IP=`curl -4 icanhazip.com`
 
   DOTENV=".env"
   echo "APP_NAME=avalon" >> $DOTENV
-  echo "BASE_URL=http://localhost:8888/" >> $DOTENV
-  echo "STREAMING_HOST=localhost" >> $DOTENV
+  echo "BASE_URL=http://$EXT_IP/" >> $DOTENV
+  echo "STREAM_RTMP_BASE=http://$EXT_IP:1935/avalon" >> $DOTENV
+  echo "STREAM_HTTP_BASE=http://$EXT_IP:8880/avalon" >> $DOTENV
+  echo "STREAMING_HOST=$EXT_IP" >> $DOTENV
   echo "AVALON_DB_PASSWORD=dontcare" >> $DOTENV
   echo "FEDORA_DB_PASSWORD=dontcare" >> $DOTENV
   echo "SECRET_KEY_BASE=dontcare" >> $DOTENV
